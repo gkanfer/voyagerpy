@@ -1106,14 +1106,14 @@ def plot_expression_violin(
 
     secondary_column = adata.uns["config"]["secondary_var_names"]
 
-    for genes in genes:
-        if genes in adata.var[secondary_column].values:
-            new_genes = adata.var.index[adata.var[secondary_column] == genes]
-            gene_ids.extend(new_genes.tolist())
-        else:
-            assert genes in adata.var_names
-            gene_ids.append(genes)
-
+    # for genes in genes:
+    #     if genes in adata.var[adata.var.index == secondary_column].index:
+    #         new_genes = adata.var.index[adata.var[secondary_column] == genes]
+    #         gene_ids.extend(new_genes.tolist())
+    #     else:
+    #         assert genes in adata.var_names
+    #         gene_ids.append(genes)
+    gene_ids = genes
     X = (adata.X if layer is None else adata.layers[layer]).copy()
 
     obs = (adata.obs[[groupby]] if groupby is not None else adata.obs).copy()
@@ -1144,10 +1144,10 @@ def plot_expression_violin(
         if groupby is not None:
             grouped_violinplot(ax, obs, groupby, gene_id, legend=False, cmap=cmap, **kwargs)
             title = gene_id
-            if show_symbol and secondary_column == "symbol":
-                title = adata.var.at[gene_id, secondary_column]
-            elif show_symbol:
-                title = gene_id
+            # if show_symbol and secondary_column == "symbol":
+            #     title = adata.var.at[gene_id, secondary_column]
+            # elif show_symbol:
+            #     title = gene_id
 
             ax.set_title(title)
         else:

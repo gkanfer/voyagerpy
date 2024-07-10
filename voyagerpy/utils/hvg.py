@@ -298,6 +298,7 @@ def decompose_log_exprs(_means, _vars, fit_means, fit_vars, names=None) -> pd.Da
     filt_out = output[~output["p.value"].isna()]
     # filt_out["FDR"] = fdrcorrection(filt_out["p.value"])[1]
     _, pval_corr = fdrcorrection(filt_out["p.value"])
+    output["FDR"] = 1
     output.loc[filt_out.index, "FDR"] = pval_corr
 
     return output
